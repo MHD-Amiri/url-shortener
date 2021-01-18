@@ -1,27 +1,38 @@
 const express = require("express");
+const authenticate = require("../config/auth");
 const shortid = require("shortid");
 const validUrl = require("valid-url");
 const config = require("config");
-const Url = require("../models/url");
-
 const shortUrlRouter = express.Router();
 
+// User model
+const Url = require("../models/url");
+
+// POST handler for URL shortener
+
+/////////////////////***************** authenticate, **********////////////
+
 shortUrlRouter.post("/", async (req, res) => {
+  // get data from request
   let longUrl = req.body.url;
   const suggestion = req.body.suggestion;
+  // get base URL from default.json
   const baseUrl = config.get("baseURL");
+  // check whether the base URL is valid or not
   if (!validUrl.isUri(baseUrl)) {
     return res.status(401).json("Internal error. Please come back later.");
   }
-
+  // generate a code for long URL
   const urlCode = shortid.generate();
 
   if (validUrl.isUri(longUrl)) {
     try {
+      // check if there is a short URL for this long version or not, if there is one return it
       var url = await Url.findOne({ longUrl: longUrl });
       if (url) {
         return res.status(200).json(url);
       } else {
+        // if the long URL is new save it and return the result
         const shortUrl = baseUrl + "/urlgen/" + urlCode;
         url = new Url({
           longUrl,
@@ -33,10 +44,12 @@ shortUrlRouter.post("/", async (req, res) => {
         await url.save();
         return res.status(201).json(url);
       }
+      // catch server errors
     } catch (err) {
       console.error(err.message);
       return res.status(500).json("Internal Server error " + err.message);
     }
+    // catch invalid URL
   } else {
     res
       .status(400)
