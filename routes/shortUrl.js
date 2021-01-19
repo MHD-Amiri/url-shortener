@@ -35,7 +35,7 @@ shortUrlRouter.post("/", authenticate, async (req, res) => {
         });
       } else {
         // if the long URL is new save it and return the result
-        const shortUrl = baseUrl + "/urlgen/" + ID;
+        const shortUrl = baseUrl + "/urlgen/" + urlCode;
         newUrl = new Url({
           longUrl,
           shortUrl,
