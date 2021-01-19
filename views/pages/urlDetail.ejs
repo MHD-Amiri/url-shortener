@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/header.ejs') %>
+    <title><%= title %></title>
+</head>
+
+<body>
+    <%- include('../partials/navbar.ejs') %>
+
+    <div class="container mt-5">
+        <div class="col-md-6 m-auto">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="table-primary">
+                        <th scope="col">Title</th>
+                        <th scope="col">Content</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-active">
+                        <th scope="row">User Name</th>
+                        <td><%= userName %></td>
+                    </tr>
+                    <tr class="table-active">
+                        <th scope="row">Click Count</th>
+                        <td><%= clickCount %></td>
+                    </tr>
+                    <tr class="table-active">
+                        <th scope="row">Long URL</th>
+                        <td><%= longUrl %></td>
+                    </tr>
+                    <tr class="table-active">
+                        <th scope="row">Short URL</th>
+                        <td><%= shortUrl %></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <%- include('../partials/scripts.ejs') %>
+</body>
+
+</html>
