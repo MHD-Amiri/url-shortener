@@ -36,7 +36,7 @@ mongoose.set("useCreateIndex", true);
 
 mongoose
   .connect("mongodb://localhost:27017/url-shortener", {
-  useNewUrlParser: true,
+    useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => console.log("mongoDB connected..."));
@@ -52,7 +52,7 @@ app.use(
   session({
     key: "user_sid",
     secret: "keyboard cat",
-  resave: false,
+    resave: false,
     saveUninitialized: false,
   })
 );
@@ -75,17 +75,19 @@ app.use((req, res, next) => {
 });
 
 // Routes
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const editRouter = require('./routes/edit');
-const shortUrlRouter = require("./routes/shortUrl")
-const getShortenUrlRouter = require("./routes/getShortenUrl")
-const passport = require('./config/passport');
-app.use('/dashboard/edit', editRouter);
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use("/urlgen/",getShortenUrlRouter);
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
+const editRouter = require("./routes/edit");
+const shortUrlRouter = require("./routes/shortUrl");
+const getShortenUrlRouter = require("./routes/getShortenUrl");
+const getShortenUrlDetailRouter = require("./routes/urlDetail");
+const passport = require("./config/passport");
+app.use("/dashboard/edit", editRouter);
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
+app.use("/urlgen/", getShortenUrlRouter);
 app.use("/urlgen/shorturl", shortUrlRouter);
+app.use("/urlDetail", getShortenUrlDetailRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -96,11 +98,11 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render("error");
 });
 
 module.exports = app;
