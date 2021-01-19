@@ -1,56 +1,61 @@
-const createError = require('http-errors');
-const mongoose = require('mongoose');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const session = require('express-session');
-const flash = require('connect-flash');
-const passportModule = require('passport');
+const createError = require("http-errors");
+const mongoose = require("mongoose");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const session = require("express-session");
+const flash = require("connect-flash");
+const passportModule = require("passport");
 
 const app = express();
 
 // Passport Config
-require('./config/passport')(passportModule);
+require("./config/passport")(passportModule);
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
 
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({
-  extended: false
-}));
+app.use(
+  express.urlencoded({
+    extended: false,
+  })
+);
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use(express.json({}))
+app.use(express.json({}));
 // // handle mongoose collection.ensureIndex warn
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
+mongoose.set("useNewUrlParser", true);
+mongoose.set("useFindAndModify", false);
+mongoose.set("useCreateIndex", true);
 
-mongoose.connect('mongodb://localhost:27017/test-project', {
+mongoose
+  .connect("mongodb://localhost:27017/url-shortener", {
   useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => console.log("mongoDB connected..."));
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("mongoDB connected..."));
 
 // const connectDB = require('./config/db');
 // connectDB();
 
-
 // initialize Admin user
-require('./tools/initialization')();
+require("./tools/initialization")();
 
 // initialize express-session to allow us track the logged-in user across sessions.
-app.use(session({
-  key: 'user_sid',
-  secret: 'keyboard cat',
+app.use(
+  session({
+    key: "user_sid",
+    secret: "keyboard cat",
   resave: false,
-  saveUninitialized: false
-}));
+    saveUninitialized: false,
+  })
+);
 
 app.use(cookieParser());
 

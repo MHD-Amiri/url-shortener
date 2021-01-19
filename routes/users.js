@@ -97,6 +97,7 @@ router.post('/register', (req, res, next) => {
               res.redirect('/users/login');
             })
             .catch(err => {
+              console.log(err);
               errors.push({
                 msg: "Something went wrong, please try again!"
               });

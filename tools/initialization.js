@@ -14,13 +14,10 @@ const initialization = async function () {
 
         // make an ADMIN
         const ADMIN = new User({
-            firstName: 'ali',
-            lastName: 'kuchulu',
             userName: 'ali',
             email: "alikuchulu@gmail.com",
             password: "123456789",
             gender: 'Male',
-            phoneNumber: '09125544712',
             role: 'admin'
         });
         // Hash password

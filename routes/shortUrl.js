@@ -28,21 +28,21 @@ shortUrlRouter.post("/", async (req, res) => {
   if (validUrl.isUri(longUrl)) {
     try {
       // check if there is a short URL for this long version or not, if there is one return it
-      let url = await Url.findOne({ longUrl: longUrl });
-      if (url) {
-        return res.status(200).json(url);
+      let foundUrl = await Url.findOne({ longUrl: longUrl });
+      if (foundUrl) {
+        return res.status(200).json(foundUrl);
       } else {
         // if the long URL is new save it and return the result
         const shortUrl = baseUrl + "/urlgen/" + urlCode;
-        url = new Url({
+        foundUrl = new Url({
           longUrl,
           shortUrl,
           urlCode,
           clickCount: 0,
         });
 
-        await url.save();
-        return res.status(201).json(url);
+        await foundUrl.save();
+        return res.status(201).json(foundUrl);
       }
       // catch server errors
     } catch (err) {
