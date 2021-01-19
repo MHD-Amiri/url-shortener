@@ -1,15 +1,16 @@
 const express = require("express");
 const config = require("config");
 const Url = require("../models/url");
-
 const getShortenUrlRouter = express.Router();
+
+// GET short URL and redirect to the original URL
 getShortenUrlRouter.get('/:shortUrl', async (req, res) => {
-    var shortUrlCode = req.params.shortUrl;
-    var url = await Url.findOne({ urlCode: shortUrlCode });
+    let shortUrlCode = req.params.shortUrl;
+    let url = await Url.findOne({ urlCode: shortUrlCode });
 
     try {
         if (url) {
-            var clickCount = url.clickCount;
+            let clickCount = url.clickCount;
             clickCount++;
             await url.update({ clickCount });
             return res.redirect(url.longUrl);

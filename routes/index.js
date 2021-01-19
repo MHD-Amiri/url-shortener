@@ -1,13 +1,11 @@
 const fs = require('fs');
 const express = require('express');
-const app = express();
 const router = express.Router();
 const multer = require('multer');
 const authenticate = require('../config/auth');
 
 // User model
 const User = require("../models/user");
-const Article = require("../models/article");
 
 // GET home page
 router.get('/', (req, res, next) => {
@@ -29,11 +27,8 @@ router.get('/dashboard', authenticate, (req, res, next) => {
     if (user.role === 'admin') {
       res.render('pages/adminDashboard', {
         title: 'Admin Dashboard',
-        firstName: req.user.firstName,
-        lastName: req.user.lastName,
         userName: req.user.userName,
         gender: req.user.gender,
-        phoneNumber: req.user.phoneNumber,
         createdAt: req.user.createdAt,
         bio: req.user.bio,
         avatar: req.user.avatar
@@ -42,11 +37,8 @@ router.get('/dashboard', authenticate, (req, res, next) => {
       // render the page for client with information the page need
       res.render('pages/dashboard', {
         title: 'Dashboard',
-        firstName: req.user.firstName,
-        lastName: req.user.lastName,
         userName: req.user.userName,
         gender: req.user.gender,
-        phoneNumber: req.user.phoneNumber,
         createdAt: req.user.createdAt,
         bio: req.user.bio,
         avatar: req.user.avatar

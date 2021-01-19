@@ -28,7 +28,7 @@ shortUrlRouter.post("/", async (req, res) => {
   if (validUrl.isUri(longUrl)) {
     try {
       // check if there is a short URL for this long version or not, if there is one return it
-      var url = await Url.findOne({ longUrl: longUrl });
+      let url = await Url.findOne({ longUrl: longUrl });
       if (url) {
         return res.status(200).json(url);
       } else {
