@@ -1,16 +1,12 @@
 const createError = require('http-errors');
-const express = require('express');
 const mongoose = require('mongoose');
+const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 const flash = require('connect-flash');
 const passportModule = require('passport');
-
-
-const shortid = require("shortid");
-const validUrl = require("valid-url");
 
 const app = express();
 
