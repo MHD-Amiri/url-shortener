@@ -2,20 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-    firstName: {
-        type: String,
-        required: true,
-        trim: true,
-        maxlength: 30,
-        minlength: 2
-    },
-    lastName: {
-        type: String,
-        required: true,
-        trim: true,
-        maxlength: 30,
-        minlength: 2
-    },
     userName: {
         type: String,
         required: true,
@@ -28,8 +14,6 @@ const UserSchema = new Schema({
         required: true,
         trim: true,
         unique: true,
-        maxlength: 30,
-        minlength: 3,
         lowercase: true
     },
     password: {
@@ -42,17 +26,6 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         enum: ['Male', 'Female', 'Other']
-    },
-    phoneNumber: {
-        type: String,
-        required: true,
-        trim: true,
-        unique: true
-    },
-    role: {
-        type: String,
-        enum: ['blogger', 'admin'],
-        default: 'blogger'
     },
     createdAt: {
         type: Date,

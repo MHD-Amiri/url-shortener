@@ -24,20 +24,16 @@ router.get('/register', (req, res, next) => {
 router.post('/register', (req, res, next) => {
   //// ** Need to be async ** ////
   const {
-    firstName,
-    lastName,
     userName,
     email,
     password,
     confirmPassword,
-    gender,
-    phoneNumber
   } = req.body;
 
   let errors = [];
 
   //Check required fields
-  if (!firstName || !lastName || !userName || !email || !password || !confirmPassword || !gender || !phoneNumber) {
+  if (!userName || !email || !password || !confirmPassword) {
     errors.push({
       msg: "Please fill in all required fields!"
     });
@@ -63,11 +59,8 @@ router.post('/register', (req, res, next) => {
     res.render('pages/register', {
       title: "register",
       errors,
-      firstName,
-      lastName,
       userName,
-      email,
-      phoneNumber
+      email
     });
   } else {
     //Check user existance
@@ -82,22 +75,15 @@ router.post('/register', (req, res, next) => {
         res.render('pages/register', {
           title: "register",
           errors,
-          firstName,
-          lastName,
           userName,
           email,
-          phoneNumber
         });
       } else {
         // The user does not exist, so we save the user
         const newBlogger = new User({
-          firstName,
-          lastName,
           userName,
           email,
-          password,
-          gender,
-          phoneNumber
+          password
         });
         // Hash password
         bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newBlogger.password, salt, (err, hash) => {
@@ -117,11 +103,8 @@ router.post('/register', (req, res, next) => {
               res.render('pages/register', {
                 title: "register",
                 errors,
-                firstName,
-                lastName,
                 userName,
-                email,
-                phoneNumber
+                email
               });
             });
         }))

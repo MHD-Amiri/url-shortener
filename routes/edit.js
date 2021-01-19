@@ -14,11 +14,8 @@ router.get('/', authenticate, (req, res, next) => {
   };
   res.render('pages/edit', {
     title: 'Edit Profile',
-    firstName: req.user.firstName,
-    lastName: req.user.lastName,
     userName: req.user.userName,
     gender: req.user.gender,
-    phoneNumber: req.user.phoneNumber,
     bio: req.user.bio
   });
 });
@@ -27,20 +24,17 @@ router.get('/', authenticate, (req, res, next) => {
 router.post('/', authenticate, async (req, res, next) => {
   try {
     const {
-      firstName,
-      lastName,
       userName,
       gender,
-      phoneNumber,
       bio
     } = req.body;
 
     let errors = [];
 
     //Check required fields
-    if (!firstName || !lastName || !userName || !gender || !phoneNumber) {
+    if (!userName) {
       errors.push({
-        msg: "Please fill in all required fields!"
+        msg: "Please fill in Username field!"
       });
     }
 
@@ -50,21 +44,15 @@ router.post('/', authenticate, async (req, res, next) => {
       res.render('pages/edit', {
         title: "register",
         errors,
-        firstName,
-        lastName,
         userName,
         gender,
-        phoneNumber,
         bio
       });
     } else {
       // Save the changes
       await User.findByIdAndUpdate(req.session.passport.user, {
-        firstName,
-        lastName,
         userName,
         gender,
-        phoneNumber,
         bio
       }, {
         new: true
@@ -81,10 +69,7 @@ router.post('/', authenticate, async (req, res, next) => {
     res.render('pages/register', {
       title: "register",
       errors,
-      firstName,
-      lastName,
       userName,
-      phoneNumber,
       bio
     });
   }

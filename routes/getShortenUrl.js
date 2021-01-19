@@ -11,8 +11,6 @@ getShortenUrlRouter.get('/:shortUrl', async (req, res) => {
         if (url) {
             var clickCount = url.clickCount;
             clickCount++;
-            
-            console.log(typeof(url.longurl));
             await url.update({ clickCount });
             return res.redirect(url.longUrl);
         } else {
