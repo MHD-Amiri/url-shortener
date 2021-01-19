@@ -22,9 +22,13 @@ const UserSchema = new Schema({
         trim: true,
         minlength: 8
     },
+    role: {
+        type: String,
+        enum: ['blogger', 'admin'],
+        default: 'blogger'
+    },
     gender: {
         type: String,
-        required: true,
         enum: ['Male', 'Female', 'Other']
     },
     createdAt: {
