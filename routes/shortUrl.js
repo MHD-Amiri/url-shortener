@@ -1,6 +1,6 @@
 const express = require("express");
 const authenticate = require("../config/auth");
-const shortid = require("shortid");
+var { nanoid } = require("nanoid");
 const validUrl = require("valid-url");
 const config = require("config");
 const shortUrlRouter = express.Router();
@@ -9,10 +9,7 @@ const shortUrlRouter = express.Router();
 const Url = require("../models/url");
 
 // POST handler for URL shortener
-
-/////////////////////***************** authenticate, **********////////////
-
-shortUrlRouter.post("/", async (req, res) => {
+shortUrlRouter.post("/", authenticate, async (req, res) => {
   // get data from request
   let longUrl = req.body.url;
   const suggestion = req.body.suggestion;
@@ -23,7 +20,7 @@ shortUrlRouter.post("/", async (req, res) => {
     return res.status(401).json("Internal error. Please come back later.");
   }
   // generate a code for long URL
-  const urlCode = shortid.generate();
+  const urlCode = nanoid();
 
   if (validUrl.isUri(longUrl)) {
     try {
@@ -38,7 +35,7 @@ shortUrlRouter.post("/", async (req, res) => {
         });
       } else {
         // if the long URL is new save it and return the result
-        const shortUrl = baseUrl + "/urlgen/" + urlCode;
+        const shortUrl = baseUrl + "/urlgen/" + ID;
         newUrl = new Url({
           longUrl,
           shortUrl,
