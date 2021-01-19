@@ -30,19 +30,29 @@ shortUrlRouter.post("/", async (req, res) => {
       // check if there is a short URL for this long version or not, if there is one return it
       let foundUrl = await Url.findOne({ longUrl: longUrl });
       if (foundUrl) {
-        return res.status(200).json(foundUrl);
+        return res.render("pages/generatedUrl", {
+          title: "Generated URL",
+          longUrl: foundUrl.longUrl,
+          urlCode: foundUrl.urlCode,
+          shortUrl: foundUrl.shortUrl,
+        });
       } else {
         // if the long URL is new save it and return the result
         const shortUrl = baseUrl + "/urlgen/" + urlCode;
-        foundUrl = new Url({
+        newUrl = new Url({
           longUrl,
           shortUrl,
           urlCode,
           clickCount: 0,
         });
 
-        await foundUrl.save();
-        return res.status(201).json(foundUrl);
+        await newUrl.save();
+        return res.render("pages/generatedUrl", {
+          title: "Generated URL",
+          longUrl: newUrl.longUrl,
+          urlCode: newUrl.urlCode,
+          shortUrl: newUrl.shortUrl,
+        });
       }
       // catch server errors
     } catch (err) {
