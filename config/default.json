@@ -1,4 +1,4 @@
 {
-    "mongoURI": "mongodb+srv://admin:admin@urlshortener.mvci5.mongodb.net/UrlShortener?retryWrites=true&w=majority",
+    "mongoURI": "mongodb+srv://admin:admin1234@urlshortener.mvci5.mongodb.net/urlshortener?retryWrites=true&w=majority",
     "baseURL": "http://localhost:3000"
   }
