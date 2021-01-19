@@ -25,6 +25,7 @@
                 <a href="/users/logout" type="button" class="btn btn-danger">Log Out</a>
             </td>
         </div>
+        <br>
         <form action="/urlgen/shorturl" method="POST">
             <fieldset>
                 <legend>URL Shortener</legend>
@@ -41,6 +42,7 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </fieldset>
         </form>
+        <br>
         <form action="/urlDetail" method="POST">
             <fieldset>
                 <legend>URL Detail</legend>
@@ -48,12 +50,6 @@
                     <label for="url">Shorted URL</label>
                     <input type="text" class="form-control" id="url" placeholder="Place Your Shorted Url"
                         name="shortUrl">
-                </div>
-                <div class="form-group">
-                    <label for="suggestion">Suggestion</label>
-                    <input type="text" class="form-control" id="suggestion"
-                        placeholder="Say your prefered words for shortening" name="suggestion"
-                        value="<%= typeof suggestion != 'undefined' ? suggestion: '' %>">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </fieldset>
